@@ -13,7 +13,6 @@ const getAllOrders = async (req, res) => {
 
 const createOrder = async (req, res) => {
     const {
-        id,
         customerId,
         datePlaced,
         dateExpected,
@@ -31,7 +30,6 @@ const createOrder = async (req, res) => {
         diamondID } = req.body;
     try {
         const newOrder = new Order({
-            id,
             customerId,
             datePlaced,
             dateExpected,
@@ -61,7 +59,7 @@ const updateOrderById=async(req, res)=>{
     const orderId = req.params.id;  
     const body  = req.body;
     try {
-        const updatedOrder = await Order.findOneAndUpdate({id:orderId}, body);
+        const updatedOrder = await Order.findByIdAndUpdate(orderId, body);
         if (!updatedOrder) {
             return res.status(404).json({ message: 'Order not found' });
         }
@@ -76,7 +74,7 @@ const updateOrderById=async(req, res)=>{
 const getOrderById = async (req, res) => {
     const orderId = req.params.id;
     try {
-        const order = await Order.findOne({ id: orderId });
+        const order = await Order.findById(orderId);
         if (!order) {
             return res.json({ error: "order does'nt exist" });
         }
@@ -94,7 +92,7 @@ const getOrderById = async (req, res) => {
 const deleteOrderByID = async (req, res) => {
     const orderId = req.params.id;
     try {
-        const order = await Order.deleteOne({ id: orderId });
+        const order = await Order.findByIdAndDelete( orderId );
         if (!order) {
             return res.json({ error: "order does'nt exist" });
         }

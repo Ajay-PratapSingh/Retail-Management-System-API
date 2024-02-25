@@ -1,5 +1,4 @@
 const Gemstone = require("../models/Gemstone");
-const db = require('../util/mongoose');
 
 const getAllGemstones = async (req, res) => {
     try {
@@ -57,9 +56,8 @@ const addGemstone = async (req, res) => {
 const getGemstonebyId = async (req, res) => {
     const gemstoneID = req.params.id;
     console.log(gemstoneID);
-    await db();
     try {
-        const gemstone = await Gemstone.findOne({ id: gemstoneID });
+        const gemstone = await Gemstone.findById(gemstoneID);
         if (!gemstone) {
             return res.json({ error: "Gemstone does'nt exist" });
         } else {
@@ -75,7 +73,7 @@ const updateGemstonebyId = async (req, res) => {
     const gemstoneID = req.params.id;
     const body=req.body;
     try {
-        const updatedGemstone = await Gemstone.findOneAndUpdate({ id: gemstoneID },body);
+        const updatedGemstone = await Gemstone.findByIdAndUpdate(gemstoneID,body);
         if (!updatedGemstone) {
             return res.json({ error: "Gemstone does'nt exist" });
         } else {

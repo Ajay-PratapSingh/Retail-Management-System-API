@@ -2,7 +2,6 @@ const mongoose=require('mongoose');
 
 serviceSchema=new mongoose.Schema(
     {
-        serviceID:{ type: String, required: true },
         name: { type: String, required: true },
         rate:{type: Number},
     }

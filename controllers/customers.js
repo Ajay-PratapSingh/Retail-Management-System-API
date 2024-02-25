@@ -1,16 +1,20 @@
 const Customer = require('../models/Customer');
-const db = require('../util/mongoose');
 
-const getCustomers = (req, res) => {
-    res.send("<h1>Get customers</h1>");
+const getCustomers = async (req, res) => {
+    try {
+        const customerList = await Customer.find();
+        res.status(200).json(customerList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
 }
 
 const getCustomerbyId = async (req, res) => {
     const customerID = req.params.id;
     console.log(customerID);
-    await db();
     try {
-        const customer = await Customer.findOne({ id: customerID });
+        const customer = await Customer.findById(customerID);
         if (!customer) {
             return res.json({ error: "Customer does'nt exist" });
         } else {
@@ -23,14 +27,13 @@ const getCustomerbyId = async (req, res) => {
 }
 
 const addCustomer = async (req, res) => {
-    const { id, name, email, phoneNumber, address } = req.body;
+    const {name, email, phoneNumber, address } = req.body;
     try {
         const customer = await Customer.findOne({ phoneNumber: phoneNumber });
         if (customer) {
             return res.json({ error: "Number already registered" });
         } else {
             const newCustomer = new Customer({
-                id,
                 name,
                 email,
                 phoneNumber,
@@ -49,7 +52,7 @@ const updateCustomerbyId = async (req, res) => {
     const customerID = req.params.id;
     const body = req.body;
     try {
-        const updatedCustomer = await Customer.findOneAndUpdate({ id: customerID }, body);
+        const updatedCustomer = await Customer.findByIdAndUpdate(customerID, body);
         if (!updatedCustomer) {
             return res.status(404).json({ message: 'customer not found' });
         }

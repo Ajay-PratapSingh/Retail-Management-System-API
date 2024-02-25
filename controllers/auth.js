@@ -39,7 +39,6 @@ const UserSignup = async (req, role, res) => {
 //   password,  
 // }
 const UserLogin = async (req, role, res) => {
-  console.log(secret);
   const { username, password } = req;
   try {
     const user = await User.findOne({ username });
@@ -62,7 +61,7 @@ const UserLogin = async (req, role, res) => {
         const token = jwt.sign(
           {
             role: user.role,
-            name: user.username,
+            username: user.username,
           },
           secret,
         );

@@ -11,7 +11,7 @@ const router=Router();
 router.get('/gemstones/:id',gemstonecontroller.getGemstonebyId);
 router.put("gemstones/:id",checkToken,checkRole(["admin"]),gemstonecontroller.updateGemstonebyId);
 router.get("/gemstones",gemstonecontroller.getAllGemstones);
-router.post("/gemstones",checkToken,checkRole(["employee"]),gemstonecontroller.addGemstone);
+router.post("/gemstones",checkToken,checkRole(["admin"]),gemstonecontroller.addGemstone);
 
 // Silver routes
 router.get("/silver/:id",silvercontroller.getSilverbyId);

@@ -1,7 +1,6 @@
 const mongoose=require('mongoose');
 
 const diamondSchema = new mongoose.Schema({
-    id:String,
     SuppCode: String,
     ItemName: String,
     Variety: String,

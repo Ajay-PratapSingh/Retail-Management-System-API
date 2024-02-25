@@ -1,7 +1,6 @@
 const mongoose=require('mongoose');
 
 const silverSchema = new mongoose.Schema({
-    id:{type:String, default: ""},  
     SuppCode: {type:String, default: ""},
     ItemName: {type:String, default: ""},
     Variety: {type:String, default: ""},

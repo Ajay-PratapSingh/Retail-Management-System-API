@@ -2,7 +2,6 @@ const mongoose=require('mongoose');
 
 const orderSchema = new mongoose.Schema(
   {
-    id:{ type: String, required: true },
     customerId: { type: String, required: true },
     datePlaced:{type: Date},
     dateExpected:{type:Date},

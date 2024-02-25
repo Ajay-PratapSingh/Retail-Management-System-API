@@ -13,7 +13,6 @@ const getAllSilvers = async (req, res) => {
 
 const addSilver = async (req, res) => {
     const {
-        id,
         SuppCode,
         ItemName,
         Variety,
@@ -31,7 +30,6 @@ const addSilver = async (req, res) => {
         Clarity } = req.body;
     try {
         const newSilver = new Silver({
-            id,
             SuppCode,
             ItemName,
             Variety,
@@ -61,7 +59,7 @@ const getSilverbyId = async (req, res) => {
     console.log(silverID);
     await db();
     try {
-        const silver = await Silver.findOne({ id: silverID });
+        const silver = await Silver.findById(silverID);
         if (!silver) {
             return res.json({ error: "Silver does'nt exist" });
         } else {
@@ -77,7 +75,7 @@ const updateSilverbyId = async (req, res) => {
     const silverID = req.params.id;
     const body=req.body;
     try {
-        const updatedSilver = await Silver.findOneAndUpdate({ id: silverID },body);
+        const updatedSilver = await Silver.findByIdAndUpdate(silverID,body);
         if (!updatedSilver) {
             return res.json({ error: "Silver does'nt exist" });
         } else {

@@ -13,7 +13,6 @@ const getAllDiamonds = async (req, res) => {
 
 const addDiamond = async (req, res) => {
     const {
-        id, 
         SuppCode,
         ItemName,
         Variety,
@@ -31,7 +30,6 @@ const addDiamond = async (req, res) => {
         Clarity } = req.body;
     try {
         const newDiamond = new Diamond({
-            id,
             SuppCode,
             ItemName,
             Variety,
@@ -57,11 +55,10 @@ const addDiamond = async (req, res) => {
 }
 
 const getDiamondbyId = async (req, res) => {
-    const DiamondID = req.params.id;
-    console.log(DiamondID);
-    await db();
+    const diamondID = req.params.id;
+    console.log(diamondID);
     try {
-        const diamond = await Diamond.findOne({ id: DiamondID });
+        const diamond = await Diamond.findById(diamondID);
         if (!diamond) {
             return res.json({ error: "Diamond does'nt exist" });
         } else {
@@ -77,7 +74,7 @@ const updateDiamondbyId = async (req, res) => {
     const diamondID = req.params.id;
     const body=req.body;
     try {
-        const updatedDiamond = await Diamond.findOneAndUpdate({ id: diamondID },body);
+        const updatedDiamond = await Diamond.findByIdAndUpdate(diamondID,body);
         if (!updatedDiamond) {
             return res.json({ error: "Diamond does'nt exist" });
         } else {
